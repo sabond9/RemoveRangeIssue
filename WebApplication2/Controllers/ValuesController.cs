@@ -26,7 +26,9 @@ namespace WebApplication2.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var order = context.Orders.First(r => r.OrderID == 5);
+            context.Orders.Add(new Order {CustomerID = 21, EmployeeID = 21, OrderDate = DateTime.Now});
+            context.SaveChanges();
+            var order = context.Orders.First();
             var task1 = Task.Run(() => _foo.Update(order));
             var task2 = Task.Run(() => _foo2.Update(order));
             Task.WaitAll(task1, task2);
